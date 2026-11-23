@@ -1,6 +1,6 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Technestus Farm ERP</title>
 <meta name="theme-color" content="#252525"><meta name="description" content="Technestus Investment Farm operations, accounting, investor management and monthly analytics.">
-<link rel="manifest" href="./manifest.webmanifest"><link rel="icon" type="image/png" href="/images/technestus-logo.g"><link rel="apple-touch-icon" href="./icons/icon-192.png">
+<link rel="manifest" href="./manifest.webmanifest"><link rel="icon" type="image/jpeg" href="/images/technestus-logo.jpeg"><link rel="apple-touch-icon" href="./icons/icon-192.png">
 <style>
 :root{--dark:#252525;--gold:#c99b38;--bg:#f5f5f2;--line:#e6e3db}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:#272727;font:14px Arial,sans-serif}header{background:var(--dark);color:white;padding:16px 22px;display:flex;justify-content:space-between;align-items:center;border-bottom:3px solid var(--gold)}h1{font-size:18px;margin:0}small{color:#cfcfcf}.layout{display:grid;grid-template-columns:210px 1fr;min-height:90vh}aside{background:#303030;padding:15px 9px}nav button{display:block;width:100%;margin:2px 0;text-align:left;background:transparent;color:#ddd;font-weight:500}nav button.active,nav button:hover{background:#554c36;color:#ffdb83}button{border:0;border-radius:7px;background:var(--gold);padding:10px 13px;font-weight:700;cursor:pointer}button.secondary{background:#e9e7e1}button.danger{background:#f7dfdc;color:#9b352e}main{padding:24px;max-width:1450px;width:100%;margin:auto}h2{font-size:23px;margin:0 0 5px}.muted{color:#777}.head{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;gap:12px}.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px}.card,.panel{background:white;border:1px solid var(--line);border-radius:11px;padding:17px;margin-bottom:15px}.card strong{display:block;font-size:23px;margin-top:8px}.card small{color:#777}.panel h3{margin:0 0 12px}.scroll{overflow:auto}table{width:100%;border-collapse:collapse;min-width:650px}th,td{border-bottom:1px solid #eceae4;padding:10px;text-align:left;font-size:12px}th{background:#fafaf8;color:#666}input,select,textarea{width:100%;padding:10px;border:1px solid #d7d4ca;border-radius:6px;font:inherit;background:white}label{display:block;color:#555;font-size:12px;margin-bottom:5px}.fields{display:grid;grid-template-columns:1fr 1fr;gap:12px}.field.wide{grid-column:1/-1}.modal{display:none;position:fixed;inset:0;background:#0008;z-index:20;align-items:center;justify-content:center;padding:12px}.modal.show{display:flex}.dialog{background:white;border-radius:12px;padding:20px;width:min(720px,100%);max-height:92vh;overflow:auto}.dialogtop{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}.toolbar{display:flex;gap:8px;flex-wrap:wrap}.note{background:#fff5d9;border-radius:8px;padding:12px;margin:12px 0;color:#6b541d}.badge{background:#f5e9c9;padding:5px 8px;border-radius:15px}.empty{text-align:center;color:#888;padding:30px}.doc{padding:20px;background:white}.dochead{display:flex;justify-content:space-between;border-bottom:3px solid var(--gold)}.doc h2{letter-spacing:1px}.right{text-align:right}@media(max-width:850px){.layout{display:block}aside{padding:8px}nav{display:flex;overflow:auto}nav button{white-space:nowrap;width:auto}main{padding:14px}.cards{grid-template-columns:1fr 1fr}}@media(max-width:500px){.fields{grid-template-columns:1fr}.field.wide{grid-column:auto}.cards{grid-template-columns:1fr 1fr}.card strong{font-size:17px}}@media print{header,aside,.head,.toolbar,.noprint{display:none!important}.layout{display:block}.modal{position:static;background:white}.dialog{max-height:none;width:100%}.doc{border:0}}
 
@@ -151,5 +151,330 @@ function exportAnalytics(){let rows=monthlyDataset(analyticsYear),keys=['month',
 </script><script>
 if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) {
   window.addEventListener('load', () => navigator.serviceWorker.register('./service-worker.js').catch(err => console.warn('Offline setup unavailable:', err)));
+
 }
-</script><script>init();</script></body></html>
+</script>
+
+<!-- TECHNESTUS HATCHERY COUNTDOWN AND REMINDERS -->
+<script>
+
+(function () {
+  "use strict";
+
+  const DAY_MS = 24 * 60 * 60 * 1000;
+  const REMINDER_KEY = "technestus_hatch_alerts_v1";
+
+  function dateOnly(value) {
+    if (!value) return null;
+    const parts = String(value).slice(0, 10).split("-").map(Number);
+    if (parts.length !== 3 || parts.some(n => !Number.isFinite(n))) {
+      return null;
+    }
+    const d = new Date(parts[0], parts[1] - 1, parts[2]);
+    if (
+      d.getFullYear() !== parts[0] ||
+      d.getMonth() !== parts[1] - 1 ||
+      d.getDate() !== parts[2]
+    ) return null;
+    return d;
+  }
+
+  function addDays(date, days) {
+    const d = new Date(date);
+    d.setDate(d.getDate() + days);
+    return d;
+  }
+
+  function daysUntil(date) {
+    const now = new Date();
+    const today = new Date(
+      now.getFullYear(), now.getMonth(), now.getDate()
+    );
+    return Math.round((date - today) / DAY_MS);
+  }
+
+  function formatDate(date) {
+    return date.toLocaleDateString("en-KE", {
+      day: "numeric",
+      month: "short",
+      year: "numeric"
+    });
+  }
+
+  function countdownText(days, action) {
+    if (days > 0) return days + " day(s) remaining";
+    if (days === 0) return "TODAY - " + action;
+    return Math.abs(days) + " day(s) overdue";
+  }
+
+  function getActiveBatches() {
+    if (typeof db === "undefined" || !Array.isArray(db.hatches)) {
+      return [];
+    }
+
+    return db.hatches
+      .filter(batch => batch.setDate && !(Number(batch.hatched) > 0))
+      .map(batch => {
+        const setDate = dateOnly(batch.setDate);
+        if (!setDate) return null;
+
+        const transfer = addDays(setDate, 18);
+        const hatch = addDays(setDate, 21);
+
+        return {
+          batch,
+          transfer,
+          hatch,
+          transferDays: daysUntil(transfer),
+          hatchDays: daysUntil(hatch)
+        };
+      })
+      .filter(item => item && daysUntil(dateOnly(item.batch.setDate)) <= 0 && item.hatchDays >= 0)
+      .sort((a, b) => a.hatch - b.hatch);
+  }
+
+  function renderCountdown() {
+    if (typeof page === "undefined" || page !== "dashboard") return;
+    if (typeof sessionUser === "undefined" || !sessionUser) return;
+
+    const main = document.getElementById("main");
+    if (!main) return;
+
+    let panel = document.getElementById("technestusCountdown");
+
+    if (!panel) {
+      panel = document.createElement("div");
+      panel.id = "technestusCountdown";
+      panel.className = "panel";
+      main.appendChild(panel);
+    }
+
+    const batches = getActiveBatches();
+
+    let html = `
+      <h3>🐣 Live Incubation Countdown</h3>
+      <p class="muted">
+        Automatic day-18 transfer and day-21 hatching reminders
+      </p>
+      <button type="button" onclick="enableHatchAlerts()">
+        🔔 Enable Browser Notifications
+      </button>
+      <div style="margin-top:15px">
+    `;
+
+    if (!batches.length) {
+      html += `<p class="muted">No active incubation batches.</p>`;
+    }
+
+    batches.forEach(item => {
+      const b = item.batch;
+      const setDate = dateOnly(b.setDate);
+const elapsedDays = -daysUntil(setDate);
+const currentDay = Math.min(21, Math.max(1, elapsedDays + 1));
+const progress = Math.min(100, Math.round(currentDay / 21 * 100));
+
+let stage = "Early incubation";
+
+if (currentDay >= 8 && currentDay <= 14) {
+  stage = "Embryo development";
+} else if (currentDay >= 15 && currentDay <= 17) {
+  stage = "Preparing for transfer";
+} else if (currentDay === 18) {
+  stage = "Transfer day";
+} else if (currentDay >= 19 && currentDay <= 20) {
+  stage = "Final incubation";
+} else if (currentDay === 21) {
+  stage = "Expected hatch day";
+}
+      const safe = typeof esc === "function"
+        ? esc
+        : value => String(value ?? "").replace(/[&<>"']/g, "");
+
+      const transferColor = item.transferDays <= 0
+        ? "#b45309" : "#287a54";
+      const hatchColor = item.hatchDays <= 0
+        ? "#b45309" : "#287a54";
+
+      html += `
+        <div style="
+          border:1px solid #e6e3db;
+          border-left:5px solid #c99b38;
+          border-radius:10px;
+          padding:15px;
+          margin-bottom:12px;
+          background:#fff;
+        ">
+          <h3 style="margin-bottom:8px">
+            🥚 Batch: ${safe(b.batch || b.id || "Unnamed")}
+          </h3>
+
+          <p><b>Incubator:</b> ${safe(b.machine || "Not specified")}</p>
+          <p><b>Eggs set:</b> ${Number(b.eggsSet || 0)}</p>
+          <p><b>Set date:</b> ${formatDate(dateOnly(b.setDate))}</p>
+
+<div style="
+  background:#f7f5ef;
+  padding:15px;
+  border-radius:10px;
+  margin:12px 0;
+">
+  <h3 style="color:#252525">
+    🐣 Incubation Day ${currentDay} of 21
+  </h3>
+
+  <p><b>Stage:</b> ${stage}</p>
+
+  <div style="
+    width:100%;
+    height:16px;
+    background:#e5e5e5;
+    border-radius:10px;
+    overflow:hidden;
+  ">
+    <div style="
+      width:${progress}%;
+      height:100%;
+      background:#c99b38;
+      border-radius:10px;
+    "></div>
+  </div>
+
+  <p>
+    <b>${progress}%</b> of incubation timeline completed
+  </p>
+</div>
+
+
+          <div style="
+            display:grid;
+            grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
+            gap:12px;
+          ">
+            <div style="background:#fff8e6;padding:12px;border-radius:8px">
+              <b>🔄 Day 18 - Egg Transfer</b>
+              <p>${formatDate(item.transfer)}</p>
+              <strong style="color:${transferColor}">
+                ${countdownText(item.transferDays, "TRANSFER EGGS")}
+              </strong>
+            </div>
+
+            <div style="background:#edf8f0;padding:12px;border-radius:8px">
+              <b>🐣 Day 21 - Expected Hatch</b>
+              <p>${formatDate(item.hatch)}</p>
+              <strong style="color:${hatchColor}">
+                ${countdownText(item.hatchDays, "EXPECTED HATCH")}
+              </strong>
+            </div>
+          </div>
+        </div>
+      `;
+    });
+
+    html += `</div>`;
+    panel.innerHTML = html;
+  }
+
+  function checkReminders() {
+    if (typeof sessionUser === "undefined" || !sessionUser) return;
+    if (!("Notification" in window)) return;
+    if (Notification.permission !== "granted") return;
+
+    const batches = getActiveBatches();
+    const currentDate = new Date().toLocaleDateString("en-CA");
+    const userId = String(sessionUser.id || "user");
+
+    let sent = {};
+    try {
+      sent = JSON.parse(localStorage.getItem(REMINDER_KEY) || "{}");
+    } catch (_) {}
+
+    batches.forEach(item => {
+      const b = item.batch;
+      const batchId = String(b.id || b.batch || b.setDate);
+      const events = [
+        {
+          days: item.transferDays,
+          type: "transfer",
+          title: "Technestus - Transfer Eggs Today",
+          body: `Batch ${b.batch || batchId}: transfer eggs to the hatcher.`
+        },
+        {
+          days: item.hatchDays,
+          type: "hatch",
+          title: "Technestus - Hatch Day",
+          body: `Batch ${b.batch || batchId}: chicks are expected to hatch today.`
+        }
+      ];
+
+      events.forEach(event => {
+        const key = `${userId}:${batchId}:${event.type}:${currentDate}`;
+
+        if (event.days !== 0 || sent[key]) return;
+
+        try {
+          new Notification(event.title, {
+            body: event.body,
+            icon: "/images/technestus-logo.jpeg",
+            tag: key
+          });
+          sent[key] = true;
+        } catch (err) {
+          console.warn("Notification unavailable:", err);
+        }
+      });
+    });
+
+    localStorage.setItem(REMINDER_KEY, JSON.stringify(sent));
+  }
+
+  window.enableHatchAlerts = async function () {
+    if (!("Notification" in window)) {
+      alert("This browser does not support notifications.");
+      return;
+    }
+
+    try {
+      const permission = await Notification.requestPermission();
+
+      if (permission === "granted") {
+        alert("Technestus hatchery browser alerts enabled.");
+        checkReminders();
+      } else {
+        alert("Notification permission was not granted.");
+      }
+    } catch (err) {
+      alert("Unable to enable notifications on this browser.");
+    }
+  };
+
+  // Add the countdown after the existing dashboard renders.
+  if (typeof dashboard === "function") {
+    const existingDashboard = dashboard;
+
+    dashboard = function (main) {
+      existingDashboard(main);
+      renderCountdown();
+      checkReminders();
+    };
+  }
+
+  // Refresh without replacing other dashboard content.
+  setInterval(function () {
+    renderCountdown();
+    checkReminders();
+  }, 60000);
+
+  document.addEventListener("visibilitychange", function () {
+    if (!document.hidden) {
+       renderCountdown();
+      checkReminders();
+    }
+  });
+
+})();
+</script>
+<!-- END TECHNESTUS HATCHERY COUNTDOWN -->
+
+<script>init();</script>
+</body>
+</html>
