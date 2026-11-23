@@ -14,7 +14,206 @@
 .erp-logo {
   width: 60px;
   height: 60px;
-  object-fit: contain;
+  object-fit: contain;}
+
+
+<!-- TECHNESTUS FARM ERP BRAND THEME -->
+<style>
+:root {
+  --dark: #4F8A3D;
+  --gold: #FFD93D;
+  --bg: #F5FBEF;
+  --line: #CFE7BF;
+  --primary: #FFD93D;
+  --secondary: #A8D98B;
+}
+
+/* Main background */
+body {
+  background: #F5FBEF !important;
+  color: #25351B !important;
+}
+
+/* Header */
+header {
+  background: #4F8A3D !important;
+  color: #FFFFFF !important;
+  border-bottom: 4px solid #FFD93D !important;
+}
+
+header h1,
+header small {
+  color: #FFFFFF !important;
+}
+
+#cloudStatus {
+  color: #FFF2A6 !important;
+}
+
+/* Sidebar */
+aside {
+  background: #DDF2CE !important;
+  border-right: 2px solid #A8D98B !important;
+}
+
+nav button,
+#nav button {
+  background: transparent !important;
+  color: #25351B !important;
+  font-weight: 600;
+  border-radius: 8px;
+}
+
+nav button:hover,
+#nav button:hover {
+  background: #A8D98B !important;
+  color: #25351B !important;
+}
+
+nav button.active,
+#nav button.active {
+  background: #FFD93D !important;
+  color: #25351B !important;
+  font-weight: 700;
+}
+
+/* Dashboard cards */
+.card {
+  background: #FFFFFF !important;
+  border: 1px solid #CFE7BF !important;
+  border-left: 5px solid #A8D98B !important;
+  border-radius: 12px;
+}
+
+.card strong {
+  color: #4F8A3D !important;
+}
+
+.card small {
+  color: #607455 !important;
+}
+
+/* Content panels */
+.panel {
+  background: #FFFFFF !important;
+  border: 1px solid #CFE7BF !important;
+  border-radius: 12px;
+}
+
+/* Main buttons */
+button {
+  background: #FFD93D;
+  color: #25351B;
+}
+
+button:hover {
+  background: #EFC82D;
+}
+
+button.secondary {
+  background: #E5F5DB !important;
+  color: #25351B !important;
+  border: 1px solid #A8D98B;
+}
+
+button.danger {
+  background: #B83B3B !important;
+  color: #FFFFFF !important;
+}
+
+/* Tables */
+table {
+  background: #FFFFFF;
+}
+
+th {
+  background: #DDF2CE !important;
+  color: #25351B !important;
+}
+
+td {
+  border-bottom: 1px solid #D7E9C9;
+}
+
+tbody tr:nth-child(even) {
+  background: #F5FBEF;
+}
+
+tbody tr:hover {
+  background: #EBF7E2;
+}
+
+/* Form inputs */
+input,
+select,
+textarea {
+  background: #FFFFFF;
+  border: 1px solid #A8D98B !important;
+  color: #25351B;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: 2px solid #FFD93D;
+  border-color: #4F8A3D !important;
+}
+
+/* Login screen */
+#authGate {
+  background: linear-gradient(
+    135deg,
+    #A8D98B,
+    #F5FBEF,
+    #FFD93D
+  ) !important;
+}
+
+#authGate .authbox {
+  background: #FFFFFF !important;
+  border: 2px solid #A8D98B;
+  border-radius: 15px;
+}
+
+#authGate button {
+  background: #FFD93D !important;
+  color: #25351B !important;
+}
+
+/* Information notices */
+.note {
+  background: #FFF8D6 !important;
+  color: #25351B !important;
+  border-left: 4px solid #FFD93D;
+}
+
+/* Headings */
+main h2,
+main h3 {
+  color: #25351B !important;
+}
+
+/* Badges */
+.badge {
+  background: #E5F5DB !important;
+  color: #32652A !important;
+}
+
+/* Printable documents */
+.dochead {
+  border-bottom: 3px solid #FFD93D !important;
+}
+
+/* Preserve print layout */
+@media print {
+  header,
+  aside {
+    display: none !important;
+  }
+}
+</style>
+<!-- END TECHNESTUS FARM ERP BRAND THEME -->
+
 }</style></head><body><header><div class="brand">
   <img src="/images/technestus-logo.jpeg" alt="Technestus Logo" class="erp-logo">
   <div>
@@ -40,7 +239,19 @@ incubators:{title:'Incubators',fields:[['name','Machine name','text'],['capacity
 eggs:{title:'Egg batches',fields:[['batch','Batch ID','text'],['source','Supplier / source','text'],['breed','Breed','text'],['quantity','Eggs purchased','number'],['unitCost','Cost per egg (KSh)','number'],['date','Received date','date']],cols:['batch','source','breed','quantity','unitCost','date']},
 hatches:{title:'Incubation & hatching',fields:[['batch','Egg batch ID','text'],['machine','Incubator','select',()=>db.incubators.map(r=>r.name)],['breed','Breed','text'],['setDate','Set date','date'],['eggsSet','Eggs set','number'],['hatched','Chicks hatched','number'],['notes','Notes','text']],cols:['batch','machine','setDate','transferDate','hatchDate','eggsSet','hatched','rate']},
 brooding:{title:'Brooding',fields:[['batch','Brooding batch ID','text'],['breed','Breed','text'],['startDate','Start date','date'],['quantity','Chicks placed','number'],['current','Live chicks','number'],['feedCost','Feed cost (KSh)','number'],['medCost','Medication cost (KSh)','number'],['otherCost','Other cost (KSh)','number']],cols:['batch','breed','startDate','quantity','current','feedCost','medCost','otherCost']},
-birds:{title:'Bird inventory',fields:[['breed','Breed','text'],['category','Age / category','text'],['quantity','Live birds','number'],['unitCost','Cost per bird (KSh)','number'],['location','House','text']],cols:['breed','category','quantity','unitCost','location']},
+
+birds:{
+  title:'Bird inventory',
+  fields:[
+    ['batch','Bird Batch ID','text'],
+    ['breed','Breed','text'],
+    ['hatchDate','Date Hatched','date'],
+    ['quantity','Live Birds','number'],
+    ['unitCost','Cost Per Bird (KSh)','number'],
+    ['location','Poultry House','text']
+  ],
+  cols:['batch','breed','hatchDate','age','quantity','unitCost','location']
+},
 mortality:{title:'Mortality',fields:[['date','Date','date'],['batch','Brooding / flock batch','text'],['quantity','Birds lost','number'],['cause','Cause','text'],['notes','Notes','text']],cols:['date','batch','quantity','cause','notes']},
 customers:{title:'Customers',fields:[['name','Customer name','text'],['phone','Phone','tel'],['location','Location','text'],['email','Email','email']],cols:['name','phone','location','email']},
 sales:{title:'Sales',fields:[['date','Date','date'],['customer','Customer','select',()=>db.customers.map(r=>r.name)],['item','Item / bird type','text'],['quantity','Quantity','number'],['unitPrice','Unit selling price (KSh)','number'],['unitCost','Unit cost of sale (KSh)','number'],['paid','Amount received (KSh)','number'],['invoice','Linked invoice number (optional)','text']],cols:['date','customer','item','quantity','unitPrice','total','cogs','paid','balance']},
@@ -54,7 +265,53 @@ receipts:{title:'Receipts',fields:[['customer','Customer','select',()=>db.custom
 const names={dashboard:'▦ Dashboard',incubators:'♨ Incubators',eggs:'🥚 Egg batches',hatches:'🐣 Hatchery',brooding:'🐥 Brooding',birds:'🐓 Bird stock',mortality:'＋ Mortality',customers:'♙ Customers',sales:'🛒 Sales',expenses:'↘ Expenses',investors:'♧ Investors',investments:'▤ Agreements',repayments:'↗ Repayments',invoices:'▧ Invoices',receipts:'▥ Receipts',reports:'◫ Reports',settings:'⚙ Data & settings'};
 function nav(){document.getElementById('nav').innerHTML=Object.entries({...names,users:'🔐 Users & permissions'}).filter(([k])=>canView(k)).map(([k,v])=>`<button class="${page===k?'active':''}" onclick="go('${k}')">${v}</button>`).join('')}
 function go(p){if(!canView(p))return alert('Access denied for your role.');page=p;render()}
-function cell(k,r){let v=r[k];if(['amount','principal','interest','totalPayable','outstanding','unitPrice','unitCost','feedCost','medCost','otherCost','total','cogs','paid','balance','principalPaid','interestPaid'].includes(k))return cash(v);if(k==='rate')return (v||0)+'%';return esc(v)}
+
+function birdAge(hatchDate) {
+  if (!hatchDate) return 'Set hatch date';
+
+  const [year, month, day] = hatchDate.split('-').map(Number);
+
+  const hatch = new Date(year, month - 1, day);
+  const today = new Date();
+
+  hatch.setHours(0, 0, 0, 0);
+  today.setHours(0, 0, 0, 0);
+
+  const days = Math.round(
+    (Date.UTC(today.getFullYear(), today.getMonth(), today.getDate()) -
+     Date.UTC(hatch.getFullYear(), hatch.getMonth(), hatch.getDate())) /
+    86400000
+  );
+
+  if (!Number.isFinite(days)) return 'Invalid hatch date';
+  if (days < 0) return 'Not yet hatched';
+
+  const weeks = Math.floor(days / 7);
+  const remainingDays = days % 7;
+
+  return `${days} days (${weeks} weeks, ${remainingDays} days)`;
+}
+
+function cell(k,r) {
+  if (k === 'age') {
+    return esc(birdAge(r.hatchDate));
+  }
+
+  let v = r[k];
+
+  if ([
+    'amount','principal','interest','totalPayable',
+    'outstanding','unitPrice','unitCost','feedCost',
+    'medCost','otherCost','total','cogs','paid',
+    'balance','principalPaid','interestPaid'
+  ].includes(k)) {
+    return cash(v);
+  }
+
+  if (k === 'rate') return (v || 0) + '%';
+
+  return esc(v);
+}
 function render(){if(!sessionUser)return;nav();let m=document.getElementById('main');if(page==='users')return usersPage(m);if(page==='dashboard')return dashboard(m);if(page==='reports')return reports(m);if(page==='settings')return settings(m);let s=schemas[page],rows=db[page];m.innerHTML=`<div class="head"><div><h2>${s.title}</h2><div class="muted">${rows.length} record(s) · Saved locally</div></div><div class="toolbar"><button class="secondary" onclick="exportCSV('${page}')">Export CSV</button><button onclick="newRecord('${page}')">＋ Add record</button></div></div>${page==='investments'?'<div class="note">Each agreement has its own interest method, repayment frequency, due date and terms. For custom instalments, enter agreed dates and amounts in the schedule field.</div>':''}<div class="panel scroll"><table><thead><tr>${s.cols.map(k=>`<th>${esc(k.replace(/([A-Z])/g,' $1'))}</th>`).join('')}<th>Actions</th></tr></thead><tbody>${rows.length?rows.slice().reverse().map(r=>`<tr>${s.cols.map(k=>`<td>${cell(k,r)}</td>`).join('')}<td><button class="secondary" onclick="editRecord('${page}',${r.id})">Edit</button> ${['invoices','receipts','repayments'].includes(page)?`<button onclick="printDoc('${page}',${r.id})">Print</button>`:''} <button class="danger" onclick="removeRecord('${page}',${r.id})">Delete</button></td></tr>`).join(''):`<tr><td colspan="${s.cols.length+1}" class="empty">No records yet. Add your first record.</td></tr>`}</tbody></table></div>`}
 function dashboard(m){let capital=sum(db.investments,'principal'),due=sum(db.investments,'totalPayable')-sum(db.repayments,'amount'),eggs=sum(db.hatches,'eggsSet'),sales=sum(db.sales,'total'),exp=sum(db.expenses,'amount'),incubated=db.hatches.filter(r=>r.setDate&&r.hatchDate>=today()).reduce((a,r)=>a+Number(r.eggsSet||0),0);let cards=[['Eggs in incubators',incubated.toLocaleString()],['Birds in inventory',sum(db.birds,'quantity').toLocaleString()],['Sales recorded',cash(sales)],['Operating expenses',cash(exp)],['Investor capital received',cash(capital)],['Investor obligations',cash(due)],['Mortality recorded',sum(db.mortality,'quantity').toLocaleString()],['Outstanding customer sales',cash(sum(db.sales,'balance'))]];m.innerHTML=`<div class="head"><div><h2>Farm overview</h2><div class="muted">Technestus Investment Farm · Operations dashboard</div></div><button onclick="backup()">Download backup</button></div><div class="cards">${cards.map(([a,b])=>`<div class="card"><small>${a}</small><strong>${b}</strong></div>`).join('')}</div><div class="panel"><h3>Current incubation batches and expected hatch dates</h3><div class="scroll"><table><tr><th>Batch</th><th>Machine</th><th>Eggs set</th><th>Day 18 transfer</th><th>Expected hatch</th></tr>${db.hatches.filter(r=>r.hatchDate>=today()).map(r=>`<tr><td>${esc(r.batch)}</td><td>${esc(r.machine)}</td><td>${r.eggsSet}</td><td>${r.transferDate}</td><td>${r.hatchDate}</td></tr>`).join('')||'<tr><td colspan="5">No active hatch batches.</td></tr>'}</table></div></div><div class="panel"><h3>Investor repayment reminders</h3>${db.investments.filter(r=>r.outstanding>0).sort((a,b)=>a.dueDate.localeCompare(b.dueDate)).slice(0,6).map(r=>`<p><b>${esc(r.agreementId)}</b> · ${esc(r.investorId)} · ${cash(r.outstanding)} remaining · due ${esc(r.dueDate)} ${r.dueDate<today()?'<span class="badge">Overdue</span>':''}</p>`).join('')||'<p class="muted">No outstanding investment agreements.</p>'}</div><div class="note">Offline-first starter: this app stores data in this browser only. Back up regularly. Secure employee logins, shared cloud storage and automatic cross-device synchronization are not included yet.</div>`}
 function fieldHTML(f,r){let [k,label,type,options]=f,val=r?.[k]??(type==='date'?today():'');let opts=typeof options==='function'?options():String(options||'').split(',').filter(Boolean);return `<div class="field ${k==='notes'||k==='schedule'?'wide':''}"><label>${label}</label>${type==='select'?`<select name="${k}"><option value="">Select...</option>${opts.map(o=>`<option ${o===val?'selected':''}>${esc(o)}</option>`).join('')}</select>`:`<input name="${k}" type="${type}" value="${esc(val)}" ${type==='number'?'step="any" min="0"':''} ${['notes','schedule'].includes(k)?'style="min-height:45px"':''}>`}</div>`}
@@ -474,6 +731,932 @@ if (currentDay >= 8 && currentDay <= 14) {
 })();
 </script>
 <!-- END TECHNESTUS HATCHERY COUNTDOWN -->
+
+
+<!-- TECHNESTUS COMMUNICATION CENTER -->
+<script>
+(function () {
+  "use strict";
+
+  const STORAGE_KEY = "technestus_communication_v1";
+
+  const channels = [
+    ["general", "General Team"],
+    ["hatchery", "Hatchery Team"],
+    ["brooding", "Brooding Team"],
+    ["sales", "Sales Team"],
+    ["announcements", "Admin Announcements"]
+  ];
+
+  let selectedChannel = "general";
+
+  function currentUser() {
+    return typeof sessionUser !== "undefined"
+      ? sessionUser
+      : null;
+  }
+
+  function isAdmin() {
+    const user = currentUser();
+
+    if (!user) return false;
+
+    return [
+      "admin",
+      "super_admin",
+      "superadmin",
+      "owner"
+    ].includes(
+      String(user.role || "")
+        .toLowerCase()
+        .replace(/\s+/g, "_")
+    );
+  }
+
+  function userName() {
+    const user = currentUser() || {};
+
+    return String(
+      user.name ||
+      user.fullName ||
+      user.email ||
+      user.username ||
+      user.id ||
+      "Employee"
+    );
+  }
+
+  function escapeText(value) {
+    return String(value ?? "").replace(
+      /[&<>"']/g,
+      character => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;"
+      }[character])
+    );
+  }
+
+  function getMessages() {
+    try {
+      const data = JSON.parse(
+        localStorage.getItem(STORAGE_KEY) || "[]"
+      );
+
+      return Array.isArray(data) ? data : [];
+    } catch (error) {
+      return [];
+    }
+  }
+
+  function saveMessages(messages) {
+    localStorage.setItem(
+      STORAGE_KEY,
+      JSON.stringify(messages)
+    );
+  }
+
+  function showCommunication() {
+    const main = document.getElementById("main");
+
+    if (!main) return;
+
+    const messages = getMessages().filter(
+      message => message.channel === selectedChannel
+    );
+
+    const channelButtons = channels.map(
+      ([id, title]) => `
+        <button
+          type="button"
+          class="${selectedChannel === id ? "" : "secondary"}"
+          onclick="technestusOpenChannel('${id}')"
+          style="margin:5px"
+        >
+          ${escapeText(title)}
+        </button>
+      `
+    ).join("");
+
+    const messageHistory = messages.length
+      ? messages.map(message => `
+          <div style="
+            padding:14px;
+            border-bottom:1px solid #e5e0d4;
+          ">
+            <div style="
+              display:flex;
+              justify-content:space-between;
+              gap:12px;
+              flex-wrap:wrap;
+            ">
+              <strong>
+                ${escapeText(message.sender)}
+              </strong>
+
+              <small class="muted">
+                ${escapeText(
+                  new Date(message.time).toLocaleString("en-KE")
+                )}
+              </small>
+            </div>
+
+            <p style="
+              white-space:pre-wrap;
+              overflow-wrap:anywhere;
+              margin-top:8px;
+            ">
+              ${escapeText(message.text)}
+            </p>
+          </div>
+        `).join("")
+      : `<p class="muted">
+           No messages yet. Start a conversation.
+         </p>`;
+
+    const announcementsLocked =
+      selectedChannel === "announcements" && !isAdmin();
+
+    main.innerHTML = `
+      <div class="head">
+        <div>
+          <h2>💬 Communication Center</h2>
+          <p class="muted">
+            Technestus Investment Farm
+          </p>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h3>Team Communication</h3>
+
+        <p class="muted">
+          Select a department to view its messages.
+        </p>
+
+        <div style="
+          display:flex;
+          flex-wrap:wrap;
+          gap:5px;
+        ">
+          ${channelButtons}
+        </div>
+      </div>
+
+      <div class="panel">
+        <h3>
+          ${escapeText(
+            channels.find(
+              channel => channel[0] === selectedChannel
+            )?.[1] || "Messages"
+          )}
+        </h3>
+
+        <div style="
+          min-height:180px;
+          max-height:420px;
+          overflow-y:auto;
+          background:#faf9f6;
+          border-radius:8px;
+          padding:12px;
+        ">
+          ${messageHistory}
+        </div>
+      </div>
+
+      <div class="panel">
+        <h3>
+          ${announcementsLocked
+            ? "Admin announcements"
+            : "Send a Message"}
+        </h3>
+
+        ${announcementsLocked
+          ? `<p class="muted">
+               Only administrators can publish announcements.
+             </p>`
+          : `
+            <form onsubmit="technestusSendMessage(event)">
+              <div class="field">
+                <label>Message</label>
+
+                <textarea
+                  name="message"
+                  rows="4"
+                  maxlength="3000"
+                  required
+                  placeholder="Write your message here..."
+                  style="width:100%;padding:12px"
+                ></textarea>
+              </div>
+
+              <div class="toolbar" style="margin-top:15px">
+                <button type="submit">
+                  Send Message
+                </button>
+              </div>
+            </form>
+          `}
+      </div>
+
+      <div class="note">
+        Messages in this version are saved in the
+        current browser only. They are not yet
+        delivered to other devices.
+      </div>
+    `;
+  }
+
+  window.technestusOpenChannel = function (channelId) {
+    if (!channels.some(channel => channel[0] === channelId)) {
+      return;
+    }
+
+    selectedChannel = channelId;
+    showCommunication();
+  };
+
+  window.technestusSendMessage = function (event) {
+    event.preventDefault();
+
+    if (!currentUser()) {
+      alert("Please log in first.");
+      return;
+    }
+
+    if (
+      selectedChannel === "announcements" &&
+      !isAdmin()
+    ) {
+      alert("Only administrators can send announcements.");
+      return;
+    }
+
+    const messageText = String(
+      event.target.elements.message.value || ""
+    ).trim();
+
+    if (!messageText) return;
+
+    const messages = getMessages();
+
+    messages.push({
+      id: Date.now().toString(),
+      channel: selectedChannel,
+      sender: userName(),
+      text: messageText,
+      time: new Date().toISOString()
+    });
+
+    try {
+      saveMessages(messages);
+      showCommunication();
+    } catch (error) {
+      alert("Unable to save your message.");
+    }
+  };
+
+  // Add Communication to existing sidebar
+  const originalNav = nav;
+
+  nav = function () {
+    originalNav();
+
+    if (!currentUser()) return;
+
+    const sidebar = document.getElementById("nav");
+
+    if (!sidebar) return;
+
+    if (!sidebar.querySelector("#communicationNav")) {
+      const button = document.createElement("button");
+
+      button.id = "communicationNav";
+      button.type = "button";
+      button.textContent = "💬 Communication";
+
+      if (page === "communication") {
+        button.classList.add("active");
+      }
+
+      button.onclick = function () {
+        page = "communication";
+        render();
+      };
+
+      sidebar.appendChild(button);
+    }
+  };
+
+  // Connect Communication to existing renderer
+  const originalRender = render;
+
+  render = function () {
+    if (page === "communication") {
+      if (!currentUser()) return;
+
+      nav();
+      showCommunication();
+      return;
+    }
+
+    return originalRender();
+  };
+
+})();
+</script>
+<!-- END TECHNESTUS COMMUNICATION CENTER -->
+
+
+<!-- TECHNESTUS AUTOMATIC DOCUMENT PRINTING -->
+<script>
+(function () {
+  "use strict";
+
+  function safe(value) {
+    return String(value ?? "").replace(/[&<>"']/g, c => ({
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      '"': "&quot;",
+      "'": "&#39;"
+    }[c]));
+  }
+
+  function money(value) {
+    return "KSh " + Number(value || 0).toLocaleString(
+      "en-KE",
+      { minimumFractionDigits: 2, maximumFractionDigits: 2 }
+    );
+  }
+
+  function date(value) {
+    if (!value) return "Not specified";
+    const d = new Date(String(value).slice(0, 10) + "T12:00:00");
+    return Number.isNaN(d.getTime())
+      ? safe(value)
+      : d.toLocaleDateString("en-KE", {
+          day: "numeric",
+          month: "long",
+          year: "numeric"
+        });
+  }
+
+  function row(label, value) {
+    return `<tr>
+      <th>${safe(label)}</th>
+      <td>${safe(value)}</td>
+    </tr>`;
+  }
+
+  function moneyRow(label, value) {
+    return row(label, money(value));
+  }
+
+  function signatures(left, right) {
+    return `
+      <div class="signatures">
+        <div>
+          <h3>${safe(left)}</h3>
+          <p>Name: __________________________</p>
+          <p>Signature: ______________________</p>
+          <p>Date: __________________________</p>
+        </div>
+        <div>
+          <h3>${safe(right)}</h3>
+          <p>Name: __________________________</p>
+          <p>Signature: ______________________</p>
+          <p>Date: __________________________</p>
+        </div>
+      </div>
+    `;
+  }
+
+  function printDocument(title, content) {
+    const popup = window.open("", "_blank");
+
+    if (!popup) {
+      alert("Please allow pop-ups to print documents.");
+      return;
+    }
+
+    popup.document.open();
+    popup.document.write(`<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>${safe(title)}</title>
+<style>
+  @page {
+    size: A4;
+    margin: 17mm;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    font-family: Arial, sans-serif;
+    color: #25351B;
+    font-size: 12px;
+    line-height: 1.6;
+    margin: 0;
+    background: white;
+  }
+
+  .brand {
+    border-bottom: 4px solid #FFD93D;
+    padding-bottom: 12px;
+    margin-bottom: 24px;
+  }
+
+  .brand h1 {
+    margin: 0;
+    color: #4F8A3D;
+    font-size: 22px;
+  }
+
+  .brand p {
+    margin: 2px 0;
+  }
+
+  h2 {
+    color: #4F8A3D;
+    text-align: center;
+    font-size: 19px;
+    text-transform: uppercase;
+  }
+
+  h3 {
+    color: #4F8A3D;
+    font-size: 13px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 18px 0;
+  }
+
+  th, td {
+    border: 1px solid #CFE7BF;
+    padding: 9px;
+    text-align: left;
+    vertical-align: top;
+    overflow-wrap: anywhere;
+  }
+
+  th {
+    background: #DDF2CE;
+    width: 42%;
+  }
+
+  .signatures {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    margin-top: 45px;
+    page-break-inside: avoid;
+  }
+
+  .signatures > div {
+    border-top: 2px solid #4F8A3D;
+    padding-top: 12px;
+  }
+
+  .terms {
+    background: #F5FBEF;
+    border-left: 4px solid #FFD93D;
+    padding: 12px;
+    margin: 20px 0;
+    white-space: pre-wrap;
+  }
+
+  .footer {
+    margin-top: 35px;
+    padding-top: 10px;
+    border-top: 1px solid #CFE7BF;
+    text-align: center;
+    font-size: 10px;
+  }
+
+  .actions {
+    text-align: center;
+    margin: 20px;
+  }
+
+  .actions button {
+    padding: 12px 25px;
+    background: #FFD93D;
+    border: 0;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+
+  @media print {
+    .actions { display: none; }
+    body { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+  }
+</style>
+</head>
+<body>
+  <div class="brand">
+    <h1>TECHNESTUS INVESTMENT FARM</h1>
+    <p>Possibilities Ahead</p>
+    <p>Poultry Farming & Hatchery Services</p>
+    <p>Kisii, Kenya</p>
+    <p>Tel: 0755806572 / 0720725329</p>
+  </div>
+
+  <h2>${safe(title)}</h2>
+  ${content}
+
+  <div class="footer">
+    Generated by Technestus Farm ERP
+    <p>Possibilities Ahead</p>
+  </div>
+
+  <div class="actions">
+    <button onclick="window.print()">Print / Save as PDF</button>
+  </div>
+</body>
+</html>`);
+    popup.document.close();
+  }
+
+  function findRecord(type, id) {
+    return (db[type] || []).find(
+      record => String(record.id) === String(id)
+    );
+  }
+
+  // 1. INVESTMENT AGREEMENT
+  window.printInvestmentAgreement = function (id) {
+    const a = findRecord("investments", id);
+    if (!a) return alert("Agreement not found.");
+
+    const investor = (db.investors || []).find(
+      x => x.investorId === a.investorId
+    );
+
+    const html = `
+      <p>
+        This document records the investment arrangement
+        between Technestus Investment Farm and the investor
+        identified below, subject to the agreed terms.
+      </p>
+
+      <table>
+        ${row("Agreement Number", a.agreementId)}
+        ${row("Investor Name", investor?.name || a.investorId)}
+        ${row("Investor ID", a.investorId)}
+        ${row("Investor Contact", investor?.phone || "")}
+        ${moneyRow("Investment Capital", a.principal)}
+        ${row("Date Capital Received", date(a.receivedDate))}
+        ${row("Interest Calculation", a.interestType)}
+        ${row("Agreed Interest Value / Rate", a.interestValue)}
+        ${moneyRow("Calculated Interest", a.interest)}
+        ${moneyRow("Total Payable", a.totalPayable)}
+        ${row("Repayment Period (Months)", a.termMonths)}
+        ${row("Final Due Date", date(a.dueDate))}
+        ${row("Repayment Frequency", a.frequency)}
+        ${moneyRow("Current Outstanding Balance", a.outstanding)}
+      </table>
+
+      <h3>Repayment Schedule</h3>
+      <div class="terms">${safe(a.schedule || "As agreed by both parties.")}</div>
+
+      <h3>Additional Agreement Terms</h3>
+      <div class="terms">${safe(a.notes || "No additional terms recorded.")}</div>
+
+      <p>
+        By signing below, the parties acknowledge that
+        they have reviewed this document and agree to
+        the recorded investment terms.
+      </p>
+
+      ${signatures(
+        "Investor",
+        "Technestus Authorized Representative"
+      )}
+    `;
+
+    printDocument("Investment Agreement", html);
+  };
+
+  // 2. INVESTOR REPAYMENT ACKNOWLEDGEMENT
+  window.printRepaymentAcknowledgement = function (id) {
+    const p = findRecord("repayments", id);
+    if (!p) return alert("Repayment not found.");
+
+    const agreement = (db.investments || []).find(
+      a => a.agreementId === p.agreementId
+    );
+
+    const investor = (db.investors || []).find(
+      x => x.investorId === agreement?.investorId
+    );
+
+    const html = `
+      <p>
+        This document acknowledges the repayment
+        recorded against the investment agreement
+        identified below.
+      </p>
+
+      <table>
+        ${row("Payment Reference", p.paymentId)}
+        ${row("Agreement Number", p.agreementId)}
+        ${row("Investor", investor?.name || agreement?.investorId || "")}
+        ${row("Payment Date", date(p.date))}
+        ${row("Payment Method", p.method)}
+        ${moneyRow("Principal Repaid", p.principalPaid)}
+        ${moneyRow("Interest Repaid", p.interestPaid)}
+        ${moneyRow("Total Payment", p.amount)}
+        ${moneyRow("Agreement Outstanding Balance", agreement?.outstanding)}
+      </table>
+
+      <h3>Payment Notes</h3>
+      <div class="terms">${safe(p.notes || "No additional notes.")}</div>
+
+      <p>
+        The signatures below acknowledge the payment
+        details recorded above. This acknowledgement
+        does not replace independent payment evidence.
+      </p>
+
+      ${signatures(
+        "Investor / Payment Recipient",
+        "Technestus Authorized Representative"
+      )}
+    `;
+
+    printDocument("Investor Repayment Acknowledgement", html);
+  };
+
+  // 3. SUCCESSFUL HATCH REPORT
+  window.printHatchReport = function (id) {
+    const h = findRecord("hatches", id);
+    if (!h) return alert("Hatch batch not found.");
+
+    if (!(Number(h.hatched) > 0)) {
+      return alert("No successfully hatched chicks recorded.");
+    }
+
+    const eggs = Number(h.eggsSet || 0);
+    const chicks = Number(h.hatched || 0);
+    const failed = Math.max(0, eggs - chicks);
+    const rate = eggs > 0 ? (chicks / eggs * 100).toFixed(1) : "0.0";
+
+    const html = `
+      <table>
+        ${row("Egg Batch ID", h.batch)}
+        ${row("Breed", h.breed)}
+        ${row("Incubator", h.machine)}
+        ${row("Incubation Start", date(h.setDate))}
+        ${row("Day 18 Transfer", date(h.transferDate))}
+        ${row("Expected Hatch Date", date(h.hatchDate))}
+        ${row("Eggs Set", eggs)}
+        ${row("Successfully Hatched Chicks", chicks)}
+        ${row("Eggs Not Recorded as Hatched", failed)}
+        ${row("Hatch Rate", rate + "%")}
+      </table>
+
+      <h3>Production Notes</h3>
+      <div class="terms">${safe(h.notes || "No notes recorded.")}</div>
+
+      <p>
+        This report summarizes the recorded hatchery
+        production results for the specified batch.
+      </p>
+
+      ${signatures(
+        "Hatchery Officer",
+        "Farm Supervisor"
+      )}
+    `;
+
+    printDocument("Hatchery Production Report", html);
+  };
+
+  // 4. INVOICE
+  window.printFarmInvoice = function (id) {
+    const x = findRecord("invoices", id);
+    if (!x) return alert("Invoice not found.");
+
+    const html = `
+      <table>
+        ${row("Invoice Number", x.number)}
+        ${row("Customer", x.customer)}
+        ${row("Invoice Date", date(x.date))}
+        ${row("Due Date", date(x.dueDate))}
+        ${row("Product / Service", x.item)}
+        ${row("Quantity", x.quantity)}
+        ${moneyRow("Unit Price", x.unitPrice)}
+        ${moneyRow("Discount", x.discount)}
+        ${moneyRow("Total Invoice Amount", x.amount)}
+        ${row("Status", x.status)}
+      </table>
+
+      <h3>Notes</h3>
+      <div class="terms">${safe(x.notes || "Thank you for your business.")}</div>
+    `;
+
+    printDocument("Customer Invoice", html);
+  };
+
+  // 5. RECEIPT
+  window.printFarmReceipt = function (id) {
+    const x = findRecord("receipts", id);
+    if (!x) return alert("Receipt not found.");
+
+    const html = `
+      <table>
+        ${row("Receipt Number", x.number)}
+        ${row("Customer", x.customer)}
+        ${row("Payment Date", date(x.date))}
+        ${row("Related Invoice", x.invoice)}
+        ${row("Payment Method", x.method)}
+        ${row("Transaction Reference", x.reference)}
+        ${moneyRow("Amount Received", x.amount)}
+      </table>
+
+      <p>Thank you for your payment.</p>
+    `;
+
+    printDocument("Payment Receipt", html);
+  };
+
+  // 6. ACCOUNTING / FINANCIAL REPORT
+  window.printFarmFinancialReport = function () {
+    if (typeof ledger !== "function" ||
+        typeof balances !== "function") {
+      return alert("Accounting module is unavailable.");
+    }
+
+    const records = ledger();
+    const accountBalances = balances();
+
+    const entries = typeof ACCOUNT_LIST !== "undefined"
+      ? ACCOUNT_LIST.map(([code, name, type]) => {
+          const b = accountBalances[code] || {};
+          const net = Number(b.debit || 0) -
+                      Number(b.credit || 0);
+
+          return `<tr>
+            <td>${safe(code)}</td>
+            <td>${safe(name)}</td>
+            <td>${safe(type)}</td>
+            <td>${money(Math.max(0, net))}</td>
+            <td>${money(Math.max(0, -net))}</td>
+          </tr>`;
+        }).join("")
+      : "";
+
+    const debitTotal = records.reduce(
+      (s, r) => s + Number(r.debit || 0), 0
+    );
+
+    const creditTotal = records.reduce(
+      (s, r) => s + Number(r.credit || 0), 0
+    );
+
+    const html = `
+      <p>Report generated: ${date(new Date().toISOString())}</p>
+      <p>Currency: Kenya Shillings (KSh)</p>
+
+      <h3>General Ledger Summary / Trial Balance</h3>
+
+      <table>
+        <tr>
+          <th>Code</th>
+          <th>Account</th>
+          <th>Type</th>
+          <th>Debit</th>
+          <th>Credit</th>
+        </tr>
+        ${entries}
+      </table>
+
+      <table>
+        ${moneyRow("Total Ledger Debits", debitTotal)}
+        ${moneyRow("Total Ledger Credits", creditTotal)}
+        ${row("Ledger Entries", records.length)}
+      </table>
+
+      <div class="terms">
+        This is a provisional management report generated
+        from recorded ERP transactions. It is not an
+        audited financial statement.
+      </div>
+
+      ${signatures(
+        "Prepared By",
+        "Reviewed / Approved By"
+      )}
+    `;
+
+    printDocument("Accounting Financial Report", html);
+  };
+
+  // 7. ADD PRINT BUTTONS TO EXISTING TABLES
+  function addPrintButtons() {
+    const main = document.getElementById("main");
+    if (!main) return;
+
+    const configurations = {
+      investments: {
+        records: db.investments,
+        action: "printInvestmentAgreement",
+        label: "Print Agreement"
+      },
+      repayments: {
+        records: db.repayments,
+        action: "printRepaymentAcknowledgement",
+        label: "Print & Sign"
+      },
+      hatches: {
+        records: db.hatches,
+        action: "printHatchReport",
+        label: "Print Hatch Report"
+      },
+      invoices: {
+        records: db.invoices,
+        action: "printFarmInvoice",
+        label: "Print Invoice"
+      },
+      receipts: {
+        records: db.receipts,
+        action: "printFarmReceipt",
+        label: "Print Receipt"
+      }
+    };
+
+    if (configurations[page]) {
+      const config = configurations[page];
+      const rows = main.querySelectorAll("tbody tr");
+      const records = [...config.records].reverse();
+
+      records.forEach((record, index) => {
+        const tr = rows[index];
+        if (!tr) return;
+
+        if (page === "hatches" &&
+            !(Number(record.hatched) > 0)) {
+          return;
+        }
+
+        const cell = tr.lastElementChild;
+        if (!cell) return;
+
+        if (cell.querySelector(".technestus-print-btn")) {
+          return;
+        }
+
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "secondary technestus-print-btn";
+        button.textContent = "🖨 " + config.label;
+        button.style.margin = "4px";
+
+        button.onclick = () => {
+          window[config.action](record.id);
+        };
+
+        cell.appendChild(button);
+      });
+    }
+
+    if (page === "accounting" || page === "reports") {
+      const toolbar = main.querySelector(".head .toolbar") ||
+                      main.querySelector(".head");
+
+      if (toolbar &&
+          !toolbar.querySelector(".technestus-report-print")) {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "technestus-report-print";
+        button.textContent = "🖨 Print Financial Report";
+        button.onclick = window.printFarmFinancialReport;
+        toolbar.appendChild(button);
+      }
+    }
+  }
+
+  // Preserve existing ERP rendering
+  const previousRender = render;
+
+  render = function () {
+    const result = previousRender.apply(this, arguments);
+    addPrintButtons();
+    return result;
+  };
+
+})();
+</script>
+<!-- END TECHNESTUS AUTOMATIC DOCUMENT PRINTING -->
 
 <script>init();</script>
 </body>
