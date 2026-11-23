@@ -214,6 +214,8 @@ async function activateUser(user) {
   if (typeof render === "function") {
     render();
   }
+
+  await testCloudLoading();
 }
 
 async function logout() {
@@ -289,4 +291,33 @@ function queueDiff() {
 
 function discardPending() {
   alert("No cloud synchronization queue is configured.");
+}
+
+async function testCloudLoading() {
+  if (!supabaseClient || !sessionUser) {
+    console.warn("Please sign in first.");
+    return;
+  }
+
+  setCloudStatus("Checking cloud records...");
+
+  const { data, error, count } = await supabaseClient
+    .from("app_records")
+    .select("module, record_id, version, updated_at", {
+      count: "exact"
+    })
+    .eq("deleted", false)
+    .order("updated_at", { ascending: false })
+    .range(0, 99);
+
+  if (error) {
+    console.error("Cloud loading failed:", error);
+    setCloudStatus("Cloud read failed");
+    return;
+  }
+
+  console.log("Cloud record count:", count);
+  console.table(data);
+
+  setCloudStatus("Cloud connected · " + count + " records");
 }
